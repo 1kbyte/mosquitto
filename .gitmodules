@@ -1,0 +1,3 @@
+[submodule "third/libwebsockets"]
+	path = third/libwebsockets
+	url = https://github.com/warmcat/libwebsockets.git

@@ -104,10 +104,10 @@ int handle__publish(struct mosquitto *context)
 			db__msg_store_free(msg);
 			return MOSQ_ERR_MALFORMED_PACKET;
 		}
-		if(mid == 0){
-			db__msg_store_free(msg);
-			return MOSQ_ERR_PROTOCOL;
-		}
+		//if(mid == 0){ //comment for ms1 ethernet
+		//	db__msg_store_free(msg);
+		//	return MOSQ_ERR_PROTOCOL;
+		//}
 		/* It is important to have a separate copy of mid, because msg may be
 		 * freed before we want to send a PUBACK/PUBREC. */
 		msg->source_mid = mid;

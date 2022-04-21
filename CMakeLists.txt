@@ -25,6 +25,8 @@ endif(APPLE)
 
 include(GNUInstallDirs)
 
+set(libwebsockets_DIR ${PROJECT_SOURCE_DIR}/third/libwebsockets/build)
+
 option(WITH_BUNDLED_DEPS "Build with bundled dependencies?" ON)
 option(WITH_TLS
 	"Include SSL/TLS support?" ON)
