@@ -91,13 +91,7 @@ Fixes: [![Travis Build Status (fixes)](https://travis-ci.org/eclipse/mosquitto.s
 
 ## Build With libsockets Without TLS
 
-mkdir build
-cd build
+use vcpkg for libwebsockets
 
-cmake -DWITH_WEBSOCKETS=on -DWITH_TLS=off ..
-
-libwebsockets
-mkdir build
-cd build
-cmake -DLWS_WITH_SSL=off ..
+cmake -DWITH_WEBSOCKETS=on -DWITH_TLS=off . -B build
 
