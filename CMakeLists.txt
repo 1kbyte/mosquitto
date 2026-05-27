@@ -4,7 +4,7 @@
 # To configure the build options either use the CMake gui, or run the command
 # line utility including the "-i" option.
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 cmake_policy(SET CMP0042 NEW)
 
 project(mosquitto)
@@ -25,7 +25,6 @@ endif(APPLE)
 
 include(GNUInstallDirs)
 
-set(libwebsockets_DIR ${PROJECT_SOURCE_DIR}/third/libwebsockets/build)
 
 option(WITH_BUNDLED_DEPS "Build with bundled dependencies?" ON)
 option(WITH_TLS
@@ -65,7 +64,7 @@ option(WITH_SRV "Include SRV lookup support?" OFF)
 option(WITH_STATIC_LIBRARIES "Build static versions of the libmosquitto/pp libraries?" OFF)
 option(WITH_PIC "Build the static library with PIC (Position Independent Code) enabled archives?" OFF)
 
-option(WITH_THREADING "Include client library threading support?" ON)
+option(WITH_THREADING "Include client library threading support?" OFF)
 if (WITH_THREADING)
 	add_definitions("-DWITH_THREADING")
 	if (WIN32)
@@ -115,11 +114,11 @@ endif()
 # Include projects
 # ========================================
 
-option(WITH_CLIENTS "Build clients?" ON)
+option(WITH_CLIENTS "Build clients?" OFF)
 option(WITH_BROKER "Build broker?" ON)
-option(WITH_APPS "Build apps?" ON)
-option(WITH_PLUGINS "Build plugins?" ON)
-option(DOCUMENTATION "Build documentation?" ON)
+option(WITH_APPS "Build apps?" OFF)
+option(WITH_PLUGINS "Build plugins?" OFF)
+option(DOCUMENTATION "Build documentation?" OFF)
 
 add_subdirectory(lib)
 if (WITH_CLIENTS)
