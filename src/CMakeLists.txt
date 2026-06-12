@@ -133,13 +133,20 @@ if (CMAKE_SYSTEM_NAME STREQUAL Linux)
 endif (CMAKE_SYSTEM_NAME STREQUAL Linux)
 
 option(WITH_WEBSOCKETS "Include websockets support?" ON)
-option(STATIC_WEBSOCKETS "Use the static libwebsockets library?" OFF)
 if (WITH_WEBSOCKETS)
-	# find_package(libwebsockets)
-	find_package(libwebsockets CONFIG REQUIRED)
-	add_definitions("-DWITH_WEBSOCKETS")
+    find_package(libwebsockets CONFIG REQUIRED)
+    add_definitions("-DWITH_WEBSOCKETS")
+    
+    # 自动识别 vcpkg 提供的 target，优先使用静态或动态的 export target
+    if (TARGET libwebsockets::websockets)
+        set (MOSQ_LIBS ${MOSQ_LIBS} libwebsockets::websockets)
+    elseif (TARGET websockets)
+        set (MOSQ_LIBS ${MOSQ_LIBS} websockets)
+    else()
+        # 备用方案
+        set (MOSQ_LIBS ${MOSQ_LIBS} websockets)
+    endif()
 endif (WITH_WEBSOCKETS)
-find_package(libwebsockets CONFIG REQUIRED)
 
 option(WITH_CONTROL "Include $CONTROL topic support?" ON)
 if (WITH_CONTROL)
@@ -194,17 +201,6 @@ if (WIN32)
 	set (MOSQ_LIBS ${MOSQ_LIBS} ws2_32)
 endif (WIN32)
 
-if (WITH_WEBSOCKETS)
-	if (STATIC_WEBSOCKETS)
-		set (MOSQ_LIBS ${MOSQ_LIBS} websockets_static)
-		if (WIN32)
-			set (MOSQ_LIBS ${MOSQ_LIBS} iphlpapi)
-			link_directories(${mosquitto_SOURCE_DIR})
-		endif (WIN32)
-	else (STATIC_WEBSOCKETS)
-		set (MOSQ_LIBS ${MOSQ_LIBS} websockets_shared)
-	endif (STATIC_WEBSOCKETS)
-endif (WITH_WEBSOCKETS)
 
 add_executable(mosquitto ${MOSQ_SRCS})
 
