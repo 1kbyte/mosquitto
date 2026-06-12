@@ -201,6 +201,20 @@ if (WIN32)
 	set (MOSQ_LIBS ${MOSQ_LIBS} ws2_32)
 endif (WIN32)
 
+<<<<<<< HEAD
+=======
+if (WITH_WEBSOCKETS)
+	if (STATIC_WEBSOCKETS)
+		set (MOSQ_LIBS ${MOSQ_LIBS} websockets_static)
+		if (WIN32)
+			set (MOSQ_LIBS ${MOSQ_LIBS} iphlpapi)
+			link_directories(${mosquitto_SOURCE_DIR})
+		endif (WIN32)
+	else (STATIC_WEBSOCKETS)
+		set (MOSQ_LIBS ${MOSQ_LIBS} websockets)
+	endif (STATIC_WEBSOCKETS)
+endif (WITH_WEBSOCKETS)
+>>>>>>> d812dd63482f6ed89d1c625906268a2a6332eb33
 
 add_executable(mosquitto ${MOSQ_SRCS})
 
